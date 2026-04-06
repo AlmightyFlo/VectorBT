@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vectorbt-research"
+version = "0.1.0"
+description = "Research and backtesting workspace built on VectorBT."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "pandas",
+  "typer",
+  "vectorbt",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy",
+  "pandas-stubs",
+  "pytest",
+  "ruff",
+]
+
+[project.scripts]
+vectorbt-backtest = "vectorbt_research.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vectorbt_research"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+  "B",
+  "E",
+  "F",
+  "I",
+  "N",
+  "UP",
+  "W",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.13"
+mypy_path = ["src"]
+strict = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["vectorbt"]
+ignore_missing_imports = true
